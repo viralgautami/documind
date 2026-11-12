@@ -19,6 +19,8 @@ main{display:flex;flex-direction:column;height:100vh}
 .a p{margin:0 0 6px}
 blockquote{margin:8px 0;padding-left:10px;border-left:3px solid var(--brand);color:var(--muted)}
 .error{color:#dc2626}
+.demo{font-size:13px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.demo a{color:var(--brand)}
 form{display:flex;gap:8px;padding:14px 20px;border-top:1px solid var(--line);background:var(--card)}
 form input{flex:1;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
 form button{padding:10px 18px;border:0;border-radius:8px;background:var(--brand);color:#fff;cursor:pointer}

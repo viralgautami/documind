@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { ask, deleteDoc, listDocs, uploadDoc } from './api'
+import { DEMO, ask, deleteDoc, listDocs, loadSamples, uploadDoc } from './api'
 import type { Answer, Doc } from './api'
 
 type Turn = { q: string; a?: Answer; error?: string }
@@ -14,7 +14,8 @@ export default function App() {
 
   const refresh = () => listDocs().then(setDocs).catch((e) => setNotice(e.message))
   useEffect(() => {
-    refresh()
+    if (DEMO) loadSamples().then(refresh)
+    else refresh()
   }, [])
 
   async function onUpload(files: FileList | null) {
@@ -53,6 +54,13 @@ export default function App() {
       <aside>
         <h1>DocuMind</h1>
         <p className="muted">Upload .txt / .md files, then ask questions. Answers cite their sources.</p>
+        {DEMO && (
+          <p className="demo">
+            Demo: runs entirely in your browser (nothing is uploaded). Try “How are Kafka topics split?” or add your
+            own file. The full version has a Flask API, SQLite and optional Claude answers:{' '}
+            <a href="https://github.com/viralgautami/documind">source</a>.
+          </p>
+        )}
         <label className="upload">
           <input ref={fileRef} type="file" accept=".txt,.md" multiple onChange={(e) => onUpload(e.target.files)} />
           Upload documents

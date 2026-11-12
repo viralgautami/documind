@@ -1,6 +1,11 @@
+import * as demo from './demoApi'
+
 export type Doc = { id: number; name: string; chunks: number }
 export type Source = { n: number; doc: string; score: number; text: string }
 export type Answer = { answer: string; mode: string; sources: Source[] }
+
+// VITE_DEMO=true builds the serverless GitHub Pages demo (retrieval runs in the browser).
+export const DEMO = import.meta.env.VITE_DEMO === 'true'
 
 async function call<T>(url: string, init?: RequestInit): Promise<T> {
   const r = await fetch(url, init)
@@ -10,16 +15,21 @@ async function call<T>(url: string, init?: RequestInit): Promise<T> {
   return body as T
 }
 
-export const listDocs = () => call<Doc[]>('/api/documents')
-export const deleteDoc = (id: number) => call<void>(`/api/documents/${id}`, { method: 'DELETE' })
+export const listDocs = () => (DEMO ? demo.listDocs() : call<Doc[]>('/api/documents'))
+export const deleteDoc = (id: number) =>
+  DEMO ? demo.deleteDoc(id) : call<void>(`/api/documents/${id}`, { method: 'DELETE' })
 export const uploadDoc = (file: File) => {
+  if (DEMO) return demo.uploadDoc(file)
   const f = new FormData()
   f.append('file', file)
   return call<Doc>('/api/documents', { method: 'POST', body: f })
 }
 export const ask = (question: string) =>
-  call<Answer>('/api/ask', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ question }),
-  })
+  DEMO
+    ? demo.ask(question)
+    : call<Answer>('/api/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question }),
+      })
+export const loadSamples = demo.loadSamples
