@@ -7,8 +7,11 @@ export type Answer = { answer: string; mode: string; sources: Source[] }
 // VITE_DEMO=true builds the serverless GitHub Pages demo (retrieval runs in the browser).
 export const DEMO = import.meta.env.VITE_DEMO === 'true'
 
+// Optional: base URL of a hosted Flask API (e.g. on Render). Empty = same origin / Vite proxy.
+const API = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
+
 async function call<T>(url: string, init?: RequestInit): Promise<T> {
-  const r = await fetch(url, init)
+  const r = await fetch(API + url, init)
   if (r.status === 204) return undefined as T
   const body = await r.json().catch(() => ({}))
   if (!r.ok) throw new Error(body.error ?? `Request failed (${r.status})`)

@@ -1,0 +1,15 @@
+# Render Blueprint: New > Blueprint > pick this repo. Free plan.
+services:
+  - type: web
+    name: documind-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn run:app --bind 0.0.0.0:$PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: DOCUMIND_DB
+        value: /tmp/documind.db
