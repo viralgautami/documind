@@ -15,6 +15,17 @@ Upload `.txt` / `.md` files, ask a question, get an answer that cites the passag
 
 Retrieval is lexical (TF-IDF), not neural. The `Index`/embedder boundary in `rag.py` is small, so a sentence-embedding model can replace it without changing the API.
 
+## Evaluation
+
+`python -m eval.run_eval` (from `backend/`) scores retrieval on a small hand-written corpus (6 documents, 15 chunks):
+
+| Question set | n | hit@1 | hit@3 | MRR |
+|---|---|---|---|---|
+| Keyword-style | 20 | 100% | 100% | 1.000 |
+| Paraphrased (little word overlap) | 10 | 40% | 70% | 0.533 |
+
+Out-of-scope questions refused: 4/4. The benchmark is small and written by the author, so it is a regression check, not a general accuracy claim. The paraphrase gap is the known weakness of lexical retrieval and the reason to swap in an embedding model.
+
 ## API
 
 | Method | Path | Purpose |
