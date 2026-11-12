@@ -57,8 +57,8 @@ export default function App() {
         {DEMO && (
           <p className="demo">
             Demo: runs entirely in your browser (nothing is uploaded). Try “How are Kafka topics split?” or add your
-            own file. The full version has a Flask API, SQLite and optional Claude answers:{' '}
-            <a href="https://github.com/viralgautami/documind">source</a>.
+            own file. <a href="/documind/full/">Open the full version</a> (Flask API on a free host; the first
+            load can take ~50 s to wake) or read the <a href="https://github.com/viralgautami/documind">source</a>.
           </p>
         )}
         <label className="upload">

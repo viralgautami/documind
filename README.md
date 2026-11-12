@@ -4,6 +4,10 @@ Upload `.txt` / `.md` files, ask a question, get an answer that cites the passag
 
 **Stack:** Python, Flask, SQLite, NumPy · React, TypeScript, Vite · pytest
 
+**Try it**
+- [Instant demo](https://viralgautami.github.io/documind/): retrieval runs in your browser, nothing is uploaded.
+- [Full version](https://viralgautami.github.io/documind/full/): React UI calling the Flask API on Render's free tier. The first request can take ~50 s to wake the server, and uploaded documents are cleared when it restarts.
+
 ## How it works
 
 1. **Ingest:** a document is split into overlapping, sentence-aware chunks and stored in SQLite.
